@@ -1,0 +1,503 @@
+
+<html>
+<title>
+Comisión Binacional para el Desarrollo de la Alta Cuenca del Río Bermejo y del Río Grande de Tarija
+</title>
+<style>
+#map_basin {
+  width: 896px;
+  height: 640px;
+}
+
+#map_region {
+  width: 896px;
+  height: 640px;
+}
+
+#map_subregion {
+  width: 896px;
+  height: 640px;
+}
+
+#map_projects {
+  width: 896px;
+  height: 640px;
+}
+
+#map_social {
+  width: 0px;
+  height: 0px;
+}
+
+#map_nbi {
+  width: 896px;
+  height: 640px;
+}
+
+#googft-mapCanvas {
+  height: 640px;
+  margin: 0;
+  padding: 0;
+  width: 896px;
+}
+
+svg {
+  position: relative;
+}
+
+path {
+
+  fill-opacity: 0.5;
+  stroke: #666;
+  stroke-width: 1px;
+}
+.some-box {
+	width: 24px;
+	height: 12px;
+	display:inline-block;
+	white-space:nowrap;}
+	
+.some-box2 {
+	width: 12px;
+	height: 12px;
+	display:inline-block;
+	white-space:nowrap;}
+
+	
+</style>
+    <link 
+        rel="stylesheet" 
+        href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
+    />
+	
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<body>
+<script src="lib/jquery-1.9.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+ <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+<table border="0" background="img/banner.jpg" width="100%">
+<tr>
+<td width="15%" align="center">
+<img src="img/escudo_argentina.png" height="100px"><br>
+Argentina
+</td>
+<td width="70%" align="center">
+<h2>
+Comisión Binacional para el Desarrollo de la Alta Cuenca del Río Bermejo y del Río Grande de Tarija
+</h2>
+</td>
+<td width="15%" align="center">
+<img src="img/escudo_bolivia.png" height="100px"><br>
+Bolivia
+</td>
+</tr>
+</table>
+<table border="0" align="center">
+<tr>
+<td align="center">
+<ul class="nav nav-tabs">
+  <li role="presentation"><a href="index.html">Inicio</a></li>
+  <li role="presentation" class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Autoridades<span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			<li><a href="abouta.html">Argentina</a></li>
+			<li><a href="aboutb.html">Bolivia</a></li>
+		</ul>
+  </li>
+  <li role="presentation" class="active" ><a href="map.html">Mapas</a></li>
+  <li role="presentation" class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Normativa<span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			<li><a href="law.html">Acuerdo de Orán</a></li>
+			<li><a href="site.html">Acuerdo de Sede</a></li>
+			<li><a href="rule.html">Reglamento</a></li>
+			<li><a href="docs.html">Actas y documentos</a></li>
+		</ul>
+  </li>
+  <li role="presentation"><a href="projects.html">Proyectos</a></li>
+  <li role="presentation"><a href="links.html">Enlaces</a></li>
+  <li role="presentation"><a href="#">Noticias</a></li>
+  <li role="presentation"><a href="#">Contacto</a></li>
+</ul>
+</td>
+</tr>
+</table>
+<table border="0" align="center"><tr>
+<td align="center">
+<ul class="nav nav-pills">
+  <li role="presentation" class="active" data-toggle="pill"><a href="#" onclick="basin();">Cuenca</a></li>
+  <li role="presentation" data-toggle="pill"><a href="#" onclick="region();">Regiones</a></li>
+  <li role="presentation" data-toggle="pill"><a href="#" onclick="subregion();">Subregiones</a></li>
+  <li role="presentation" data-toggle="pill"><a href="#" onclick="projects();">Proyectos</a></li>
+  <li role="presentation" data-toggle="pill"><a href="#" onclick="social();">Indicadores sociales</a></li>
+</ul>
+</td></tr></table>
+<div align="center" id="map-basin">
+<p id="map_basin">
+<div id="legend_basin" style="position: absolute; top: 210px; left: 750px; z-index:1001; text-align:left; background-color:#f0f0f0; width: 360px; display:none;">
+<small>La Cuenca del Río Bermejo, ubicada en el extremo austral de Bolivia y en el Norte de Argentina, es
+un área clave en el sistema hídrico y para el desarrollo de la Cuenca del Plata.<br>
+Sus aproximadamente 123.000 km2 abarca territorios del Departamento de Tarija en Bolivia, y de las provincias
+argentinas de Chaco, Formosa, Jujuy y Salta.<br>
+El Río Bermejo, que fluye unos 1300 kms, conecta dos ámbitos
+geográficos de vital importancia geopolítica y económica: la Cordillera de los Andes y el sistema
+de los Ríos Paraguay-Paraná-del Plata, conformando un espacio de encuentro y amistad entre los pueblos
+argentino y boliviano.</small></div>
+</div>
+<div align="center" id="map-region">
+<p id="map_region">
+<div id="legend_region" style="position: absolute; top: 240px; left: 700px; z-index:1001; text-align:left; background-color:#f0f0f0; display:none;">
+<div class="some-box" style='background-color:green;'></div> Cordillera Oriental (1400-5700 msnm)<br>
+<div class="some-box" style='background-color:purple;'></div> Sierras y Estibaciones Subandinas (400-4200 msnm)<br>
+<div class="some-box" style='background-color:orange;'></div> Llanura Chaqueña (40-450 m)
+</div>
+</div>
+
+</div>
+<div align="center" id="map-subregion"><p id="map_subregion">
+<div id="legend_subregion" style="position: absolute; top: 210px; left: 800px; z-index:1001; text-align:left; background-color:#f0f0f0; display:none;">
+<div class="some-box2" style='background-color:red;'></div> <small>Montaña en Cordillera Oriental</small><br>
+<div class="some-box2" style='background-color:steelblue;'></div> <small>Valle Central de Tarija</small><br>
+<div class="some-box2" style='background-color:orange;'></div> <small>Quebrada de Humahuaca</small><br>
+<div class="some-box2" style='background-color:brown;'></div> <small>Montaña en Sierras y Estibaciones Subandinas</small><br>
+<div class="some-box2" style='background-color:green;'></div> <small>Submontaña en Sierras y Estibaciones Subandinas</small><br>
+<div class="some-box2" style='background-color:yellow;'></div> <small>Pedemontaña en Sierras y Estibaciones Subandinas</small><br>
+<div class="some-box2" style='background-color:magenta;'></div> <small>Derrames no modelados por el Río Bermejo</small><br>
+<div class="some-box2" style='background-color:purple;'></div> <small>Planicie de inundación actual del Río Bermejo</small><br>
+<div class="some-box2" style='background-color:blue;'></div> <small>Derrames actuales y paleocauces del Río Bermejo</small><br>
+<div class="some-box2" style='background-color:white;'></div> <small>Paleocauces distales del Río Bermejo</small><br>
+<div class="some-box2" style='background-color:teal;'></div> <small>Efluentes de la margen izquierda del Río Bermejo</small><br>
+<div class="some-box2" style='background-color:olive;'></div> <small>Derrames del Río Bermejo</small><br>
+<div class="some-box2" style='background-color:cyan;'></div> <small>Depósitos fluviales del sistema Dobagan-de Oro</small><br>
+<div class="some-box2" style='background-color:navy;'></div> <small>Albardones, depresiones y lagunas</small><br>
+<div class="some-box2" style='background-color:black;'></div> <small>Esteros y cañadas con albardones poco desarrollado</small><br>
+<div class="some-box2" style='background-color:silver;'></div> <small>Grandes albardones e interfluvios restringidos</small><br>
+<div class="some-box2" style='background-color:gray;'></div> <small>Planicie de inundación del Rio Paraguay</small>
+</div>
+</div>
+
+<div align="center" id="map-projects"><img src="img/projects.jpg"></div>
+
+<div align="center" id="map-social"><p id="map_social" style="display:none">
+<div align="center"><iframe src="map_google.html" width="896" height="640" scrolling="no"></iframe></div>
+<hr>
+<div align="center">
+<h4>Arenales 761, Casa 1, Piso 2, Palacio San Martín, (C1061AAA) - Ciudad Autónoma de Buenos Aires
+Tel + 54 11- 5199 2566/2562 - Email: info@cobinabe.org.ar</h4>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/0.5.9/chroma.min.js"></script>
+<script>
+
+var map_basin = new L.Map("map_basin", {center: [-24.2, -61.9], zoom: 7})
+    .addLayer(new L.TileLayer("http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"));
+	
+var svg_basin = d3.select(map_basin.getPanes().overlayPane).append("svg"),
+    g_basin = svg_basin.append("g").attr("class", "leaflet-zoom-hide");
+
+d3.json("data/basin.geojson", function(error, collection) {
+  if (error) throw error;
+
+  var transform_basin = d3.geo.transform({point: projectPoint_basin}),
+      path_basin = d3.geo.path().projection(transform_basin);
+
+  var feature_basin = g_basin.selectAll("path")
+      .data(collection.features)
+    .enter().append("path")
+    .attr("d", path_basin)
+	.style("fill", "brown");	
+
+  map_basin.on("viewreset", reset_basin);
+  reset_basin();
+
+  // Reposition the SVG to cover the features.
+  function reset_basin() {
+    var bounds_basin = path_basin.bounds(collection),
+        topLeft_basin = bounds_basin[0],
+        bottomRight_basin = bounds_basin[1];
+
+    svg_basin.attr("width", bottomRight_basin[0] - topLeft_basin[0])
+        .attr("height", bottomRight_basin[1] - topLeft_basin[1])
+        .style("left", topLeft_basin[0] + "px")
+        .style("top", topLeft_basin[1] + "px");
+
+    g_basin.attr("transform", "translate(" + -topLeft_basin[0] + "," + -topLeft_basin[1] + ")");
+
+    feature_basin.attr("d", path_basin);
+}
+  // Use Leaflet to implement a D3 geometric transformation.
+  function projectPoint_basin(x, y) {
+    var point = map_basin.latLngToLayerPoint(new L.LatLng(y, x));
+    this.stream.point(point.x, point.y);
+  }
+});
+
+
+var legend_basin = L.control({position: 'topright'});
+
+legend_basin.onAdd = function (map_basin) {
+
+    var div_basin = L.DomUtil.create('div', 'info legend');
+    div_basin.innerHTML = "<div style='background-color:#fff; text-align:left;'><small>La Cuenca del Río Bermejo, ubicada en el extremo austral de Bolivia y <br>en el Norte de Argentina, es un área clave en el sistema hídrico y para el<br>desrrollo de la Cuenca del Plata. Sus aproximadamente 123.000 km2 abarca <br>territorios del Departamento de Tarija en Bolivia, y de las provincias <br>argentinas de Chaco, Formosa, Jujuy y Salta.<br> El Río Bermejo, que fluye unos 1300 kms, conecta dos ámbitos geográficos<br>de vital importancia geopolítica y económica: la Cordillera de los Andes y<br>el sistema de los Ríos Paraguay-Paraná-del Plata, conformando un espacio<br>de encuentro y amistad entre los pueblos argentino y boliviano.</small></div>";
+   return div_basin;
+};
+legend_basin.addTo(map_basin);
+
+
+var map_region = new L.Map("map_region", {center: [-24.2, -61.9], zoom: 7})
+    .addLayer(new L.TileLayer("http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"));
+	
+var svg_region = d3.select(map_region.getPanes().overlayPane).append("svg"),
+    g_region = svg_region.append("g").attr("class", "leaflet-zoom-hide");
+
+d3.json("data/region.geojson", function(error_region, collection_region) {
+  if (error_region) throw error_region;
+
+  var transform_region = d3.geo.transform({point: projectPoint_region}),
+      path_region = d3.geo.path().projection(transform_region);
+
+  var feature_region = g_region.selectAll("path")
+      .data(collection_region.features)
+    .enter().append("path")
+    .attr("d", path_region)
+	.style("fill", function(d) { return d.properties.color; });	
+
+  map_region.on("viewreset", reset_region);
+  reset_region();
+
+  // Reposition the SVG to cover the features.
+  function reset_region() {
+    var bounds_region = path_region.bounds(collection_region),
+        topLeft_region = bounds_region[0],
+        bottomRight_region = bounds_region[1];
+
+    svg_region.attr("width", bottomRight_region[0] - topLeft_region[0])
+        .attr("height", bottomRight_region[1] - topLeft_region[1])
+        .style("left", topLeft_region[0] + "px")
+        .style("top", topLeft_region[1] + "px");
+
+    g_region.attr("transform", "translate(" + -topLeft_region[0] + "," + -topLeft_region[1] + ")");
+
+    feature_region.attr("d", path_region);
+  }
+
+
+
+  // Use Leaflet to implement a D3 geometric transformation.
+  function projectPoint_region(x, y) {
+    var point = map_region.latLngToLayerPoint(new L.LatLng(y, x));
+    this.stream.point(point.x, point.y);
+  }
+});
+
+var legend_region = L.control({position: 'topright'});
+
+legend_region.onAdd = function (map_region) {
+
+    var div_region = L.DomUtil.create('div', 'info legend');
+    div_region.innerHTML = "<div style='background-color:#fff; text-align:left;'><div class='some-box' style='background-color:green;'></div> Cordillera Oriental (1400-5700 msnm)<br><div class='some-box' style='background-color:purple;'></div> Sierras y Estibaciones Subandinas (400-4200 msnm)<br><div class='some-box' style='background-color:orange;'></div> Llanura Chaqueña (40-450 m)</div>";
+   return div_region;
+};
+legend_region.addTo(map_region);
+
+var map_subregion = new L.Map("map_subregion", {center: [-24.2, -61.9], zoom: 7})
+    .addLayer(new L.TileLayer("http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"));
+	
+var svg_subregion = d3.select(map_subregion.getPanes().overlayPane).append("svg"),
+    g_subregion = svg_subregion.append("g").attr("class", "leaflet-zoom-hide");
+
+d3.json("data/subregion.geojson", function(error_subregion, collection_subregion) {
+  if (error_subregion) throw error_subregion;
+
+  var transform_subregion = d3.geo.transform({point: projectPoint_subregion}),
+      path_subregion = d3.geo.path().projection(transform_subregion);
+
+  var feature_subregion = g_subregion.selectAll("path")
+      .data(collection_subregion.features)
+    .enter().append("path")
+    .attr("d", path_subregion)
+	.style("fill", function(d) { return d.properties.color; });	
+
+  map_subregion.on("viewreset", reset_subregion);
+  reset_subregion();
+
+  // Reposition the SVG to cover the features.
+  function reset_subregion() {
+    var bounds_subregion = path_subregion.bounds(collection_subregion),
+        topLeft_subregion = bounds_subregion[0],
+        bottomRight_subregion = bounds_subregion[1];
+
+    svg_subregion.attr("width", bottomRight_subregion[0] - topLeft_subregion[0])
+        .attr("height", bottomRight_subregion[1] - topLeft_subregion[1])
+        .style("left", topLeft_subregion[0] + "px")
+        .style("top", topLeft_subregion[1] + "px");
+
+    g_subregion.attr("transform", "translate(" + -topLeft_subregion[0] + "," + -topLeft_subregion[1] + ")");
+
+    feature_subregion.attr("d", path_subregion);
+  }
+
+
+var legend_subregion = L.control({position: 'topright'});
+
+legend_subregion.onAdd = function (map_subregion) {
+
+    var div_subregion = L.DomUtil.create('div', 'info legend');
+    div_subregion.innerHTML = "<div style='background-color:#fff; text-align:left;'><div class='some-box2' style='background-color:red;'></div> <small>Montaña en Cordillera Oriental</small><br><div class='some-box2' style='background-color:steelblue;'></div> <small>Valle Central de Tarija</small><br><div class='some-box2' style='background-color:orange;'></div> <small>Quebrada de Humahuaca</small><br><div class='some-box2' style='background-color:brown;'></div> <small>Montaña en Sierras y Estibaciones Subandinas</small><br><div class='some-box2' style='background-color:green;'></div> <small>Submontaña en Sierras y Estibaciones Subandinas</small><br><div class='some-box2' style='background-color:yellow;'></div> <small>Pedemontaña en Sierras y Estibaciones Subandinas</small><br><div class='some-box2' style='background-color:magenta;'></div> <small>Derrames no modelados por el Río Bermejo</small><br><div class='some-box2' style='background-color:purple;'></div> <small>Planicie de inundación actual del Río Bermejo</small><br><div class='some-box2' style='background-color:blue;'></div> <small>Derrames actuales y paleocauces del Río Bermejo</small><br><div class='some-box2' style='background-color:white;'></div> <small>Paleocauces distales del Río Bermejo</small><br><div class='some-box2' style='background-color:teal;'></div> <small>Efluentes de la margen izquierda del Río Bermejo</small><br><div class='some-box2' style='background-color:olive;'></div> <small>Derrames del Río Bermejo</small><br><div class='some-box2' style='background-color:cyan;'></div> <small>Depósitos fluviales del sistema Dobagan-de Oro</small><br><div class='some-box2' style='background-color:navy;'></div> <small>Albardones, depresiones y lagunas</small><br><div class='some-box2' style='background-color:black;'></div> <small>Esteros y cañadas con albardones poco desarrollado</small><br><div class='some-box2' style='background-color:silver;'></div> <small>Grandes albardones e interfluvios restringidos</small><br><div class='some-box2' style='background-color:gray;'></div> <small>Planicie de inundación del Rio Paraguay</small></div></div>";
+   return div_subregion;
+};
+legend_subregion.addTo(map_subregion);
+  
+
+  // Use Leaflet to implement a D3 geometric transformation.
+  function projectPoint_subregion(x, y) {
+    var point = map_subregion.latLngToLayerPoint(new L.LatLng(y, x));
+    this.stream.point(point.x, point.y);
+  }
+});
+
+L.TopoJSON = L.GeoJSON.extend({  
+  addData: function(jsonData) {    
+    if (jsonData.type === "Topology") {
+      for (key in jsonData.objects) {
+        geojson = topojson.feature(jsonData, jsonData.objects[key]);
+        L.GeoJSON.prototype.addData.call(this, geojson);
+      }
+    }    
+    else {
+      L.GeoJSON.prototype.addData.call(this, jsonData);
+    }
+  }  
+});
+
+//var map_social = new L.Map("map_social", {center: [-24.2, -61.9], zoom: 7})
+  //  .addLayer(new L.TileLayer("http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"));
+	
+//var topoLayer = new L.TopoJSON();
+//colorScale = chroma 
+	//		.scale(['magenta', 'blue'])
+		//	.domain([0,1]);
+//$.getJSON('data/radios.topojson')
+  //.done(addTopoData);
+
+//function addTopoData(topoData){  
+//  topoLayer.addData(topoData);
+//  topoLayer.addTo(map_social);
+//  topoLayer.eachLayer(handleLayer);
+//}
+
+//function handleLayer(layer)
+//{  
+	// generate a randomValue
+	// actually this should be
+	// a certain demographic
+	// property
+//	var randomValue = Math.random(),
+	
+	// convert it into a hex
+	// and pick the most similar
+	// color value out of the colorScale
+//	fillColor = colorScale(randomValue).hex();
+	
+	// set some self explanatory attributes
+//	layer.setStyle
+//	({
+//		fillColor : fillColor,
+//		fillOpacity: 0.65,
+//		color:'#990000',
+//		weight:0.25,
+//		opacity:0.9
+//	});
+//}
+
+var show_basin = document.getElementById('map-basin');
+var show_region = document.getElementById('map-region');
+var show_subregion = document.getElementById('map-subregion');
+var show_projects = document.getElementById('map-projects');
+var show_social = document.getElementById('map-social');
+
+show_basin.style.display="block";
+show_region.style.display="none";
+show_subregion.style.display="none";
+show_projects.style.display="none";
+show_social.style.display="none";
+
+function basin(){
+
+var show_basin = document.getElementById('map-basin');
+var show_region = document.getElementById('map-region');
+var show_subregion = document.getElementById('map-subregion');
+var show_projects = document.getElementById('map-projects');
+var show_social = document.getElementById('map-social');
+
+show_basin.style.display="block";
+show_region.style.display="none";
+show_subregion.style.display="none";
+show_projects.style.display="none";
+show_social.style.display="none";
+}
+
+
+function region(){
+
+var show_basin = document.getElementById('map-basin');
+var show_region = document.getElementById('map-region');
+var show_subregion = document.getElementById('map-subregion');
+var show_projects = document.getElementById('map-projects');
+var show_social = document.getElementById('map-social');
+
+show_basin.style.display="none";
+show_region.style.display="block";
+show_subregion.style.display="none";
+show_projects.style.display="none";
+show_social.style.display="none";
+}
+
+function subregion(){
+
+var show_basin = document.getElementById('map-basin');
+var show_region = document.getElementById('map-region');
+var show_subregion = document.getElementById('map-subregion');
+var show_projects = document.getElementById('map-projects');
+var show_social = document.getElementById('map-social');
+
+show_basin.style.display="none";
+show_region.style.display="none";
+show_subregion.style.display="block";
+show_projects.style.display="none";
+show_social.style.display="none";
+}
+
+function projects(){
+
+var show_basin = document.getElementById('map-basin');
+var show_region = document.getElementById('map-region');
+var show_subregion = document.getElementById('map-subregion');
+var show_projects = document.getElementById('map-projects');
+var show_social = document.getElementById('map-social');
+
+show_basin.style.display="none";
+show_region.style.display="none";
+show_subregion.style.display="none";
+show_projects.style.display="block";
+show_social.style.display="none";
+}
+
+function social(){
+
+var show_basin = document.getElementById('map-basin');
+var show_region = document.getElementById('map-region');
+var show_subregion = document.getElementById('map-subregion');
+var show_projects = document.getElementById('map-projects');
+var show_social = document.getElementById('map-social');
+
+show_basin.style.display="none";
+show_region.style.display="none";
+show_subregion.style.display="none";
+show_projects.style.display="none";
+show_social.style.display="block";
+}
+</script>
