@@ -413,9 +413,7 @@ table a, #comments a{background-color:inherit;}
 	.container{}
 	#comments input[type="reset"]{margin-top:10px;}
 	.pagination li{display:inline-block; margin:0 5px 5px 0;}
-
-	#footer{}
-
+		
 	#copyright{}
 	#copyright p:first-of-type{margin-bottom:10px;}
 }
