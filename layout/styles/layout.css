@@ -1297,6 +1297,12 @@ table a, #comments a {
         #copyright p:first-of-type {
             margin-bottom: 10px;
         }
+	.container{}
+	#comments input[type="reset"]{margin-top:10px;}
+	.pagination li{display:inline-block; margin:0 5px 5px 0;}
+		
+	#copyright{}
+	#copyright p:first-of-type{margin-bottom:10px;}
 }
 
 
