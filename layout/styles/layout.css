@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /*
 Template Name: Kelaby
 Author: <a href="http://www.os-templates.com/">OS Templates</a>
@@ -160,6 +160,9 @@ File: Layout CSS
 --------------------------------------------------------------------------------------------------------------- */
 .container {
     padding: 80px 0;
+}
+.containerindex {
+    padding: 2px 0;
 }
 
     /* Content */
