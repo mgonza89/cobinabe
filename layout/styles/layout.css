@@ -22,6 +22,7 @@ File: Layout CSS
 
 .row2 {
     border-bottom: 2px solid;
+    text-align: -webkit-center;
 }
 
 .row3, .row3 a {
@@ -514,9 +515,7 @@ File: Layout CSS
 
 /* Transition Fade
 --------------------------------------------------------------------------------------------------------------- */
-*, *::before, *::after {
-    transition: all .3s ease-in-out;
-}
+/**, *::before, *::after{transition:all .3s ease-in-out;}*/
 
 #mainav form * {
     transition: none !important;
