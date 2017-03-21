@@ -13,17 +13,14 @@ Licence URI: http://www.os-templates.com/template-terms
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
-</head>
-<body id="top">
-  <iframe src='../shared/header.html' class="wrapper row1" scrolling="no"></iframe>
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
+<link rel="stylesheet" href="../leaflet/leaflet.css" />
+<script src="../leaflet/leaflet.js"></script> 
+
 <div class="wrapper row2">
   <nav id="mainav" class="hoc clear"> 
     <!-- ################################################################################################ -->
     <ul class="clear">
-      <li class="active"><a href="../index.html">Inicio</a></li>
+      <li><a href="../index.html">Inicio</a></li>
       <li><a class="drop" href="#">Autoridades</a>
         <ul>
           <li><a href="../autoridades/argentina.html">Argentina</a></li>
@@ -47,19 +44,216 @@ Licence URI: http://www.os-templates.com/template-terms
     <!-- ################################################################################################ -->
   </nav>
 </div>
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
+
+<div class="wrapper row2">
+  <nav id="mainav" class="hoc clear"> 
+    <!-- ################################################################################################ -->
+    <ul class="clear">
+      <li><a href="#" onclick="load_base_map()">Cuenca</a></li>
+      <li><a href="#" onclick="load_region_map()">Regiones</a></li>
+      <li><a href="#" onclick="load_subregion_map()">Subregiones</a></li>
+      <li><a href="#" onclick="load_proyects_map()">Proyectos</a></li>
+      <li><a href="#" onclick="load_socialIndex_map()">Indicadores Sociales</a></li>
+    </ul>
+    <!-- ################################################################################################ -->
+  </nav>
+</div>
+
+<div style="height: 600px">
+<!-- SECCION MAPAS  -->
+<div align="center" id="base-map" class="wrapper row4" style="height: 600px">
+  <p id="base_map" class="wrapper row4" style="height: 600px">
+  <div id="legend_basin" style="position: absolute; top: 210px; left: 750px; z-index:1001; text-align:left; background-color:#f0f0f0; width: 360px; display:none;">
+    <small>La Cuenca del Río Bermejo, ubicada en el extremo austral de Bolivia y en el Norte de Argentina, es un área clave en el sistema hídrico y para el desarrollo de la Cuenca del Plata.<br> Sus aproximadamente 123.000 km2 abarca territorios del Departamento de Tarija en Bolivia, y de las provincias argentinas de Chaco, Formosa, Jujuy y Salta.<br> El Río Bermejo, que fluye unos 1300 kms, conecta dos ámbitos geográficos de vital importancia geopolítica y económica: la Cordillera de los Andes y el sistema de los Ríos Paraguay-Paraná-del Plata, conformando un espacio de encuentro y amistad entre los pueblos argentino y boliviano.</small></div>
+</div>
+
+<div align="center" id="region-map" class="wrapper row4" style="height: 600px; display: none">
+  <p id="region_map" class="wrapper row4" style="height: 600px">
+  <div id="legend_region" style="position: absolute; top: 240px; left: 700px; z-index:1001; text-align:left; background-color:#f0f0f0; display:none;">
+  <div class="some-box" style='background-color:green;'></div> Cordillera Oriental (1400-5700 msnm)<br>
+  <div class="some-box" style='background-color:purple;'></div> Sierras y Estibaciones Subandinas (400-4200 msnm)<br>
+  <div class="some-box" style='background-color:orange;'></div> Llanura Chaqueña (40-450 m)
+</div>
+</div>
+
+</div>
+</div>
+
 <iframe src='../shared/footer.html' class="wrapper row5" scrolling="no"></iframe>
 
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
 <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
 <!-- JAVASCRIPTS -->
 <script src="../layout/scripts/jquery.min.js"></script>
 <script src="../layout/scripts/jquery.backtotop.js"></script>
 <script src="../layout/scripts/jquery.mobilemenu.js"></script>
 <script src="../layout/scripts/jquery.flexslider-min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/0.5.9/chroma.min.js"></script>
+
+<script>
+  var base_map = new L.Map("base_map", {center: [-34.584909, -58.416602], zoom: 7, minZoom:2,
+  maxZoom:16}).addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));
+  base_map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
+
+  var svg_basin = d3.select(base_map.getPanes().overlayPane).append("svg"),
+      g_basin = svg_basin.append("g").attr("class", "leaflet-zoom-hide");
+
+ d3.json("../mapas/data/basin.geojson", function(error, collection){
+   if(error){
+     console.log("NO paso el throw");
+      throw error;
+   }
+
+   var transform_basin = d3.geo.transform({point: projectPoint_basin}),
+   path_basin = d3-geo.path().projection(transform_basin);
+   console.log("paso el throw");
+   var feature_basin = g_basin.selectAll("path")
+    .data(collection.features)
+    .enter().append("path")
+    .attr("d", path_basin)
+    .style("fill", "brown");
+
+    base_map.on("viewreset", reset_basin);
+    reset_basin();
+
+    function reset_basin(){
+      var bounds_basin = path_basin.bounds(collection),
+      topLeft_basin = bounds_basin[0],
+      bottomRight_basin = bounds_basin[1];
+
+      svg_basin.attr("width", bottomRight_basin[0] - topLeft_basin[0])
+      .attr("height", bottomRight_basin[1] - topLeft_basin[1])
+      .style("left", topLeft_basin[0] + "px")
+      .style("top", topLeft_basin[1] + "px");
+
+      g_basin.attr("transform", "translate(" + -topLeft_basin[0] + "," + -topLeft_basin[1] + ")");
+
+      feature_basin.attr("d", path_basin);
+    }
+    function projectPoint_basin(x, y) {
+      var point = base_map.latLngToLayerPoint(new L.LatLng(y, x));
+      this.stream.point(point.x, point.y);
+    }
+
+ });
+
+  // var polygon = L.polygon([
+  //   [-34.584909, -58.416602],
+  //   [-34.572855, -58.405505],
+  //   [-34.581343, -58.404076],
+  //   [-34.584032, -58.392338],
+  //   [-34.596048, -58.381723],
+  //   [-34.608987, -58.385397],
+  //   [-34.613019, -58.408057],
+  //   [-34.612179, -58.425919],
+  //   [-34.584909, -58.416602] 
+  // ]);
+
+  // base_map.addLayer(polygon);
+
+// function load_region_map(){
+//   var region_map = new L.Map("region-map", {center: [-34.584909, -58.416602], zoom: 7, minZoom:2,
+//   maxZoom:16}).addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));
+//   region_map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
+
+//   var cordillera_oriental = L.polygon([
+//     [-34.584909, -58.416602],
+//     [-34.572855, -58.405505],
+//     [-34.581343, -58.404076],
+//     [-34.584032, -58.392338],
+//     [-34.596048, -58.381723],
+//     [-34.608987, -58.385397],
+//     [-34.613019, -58.408057],
+//     [-34.612179, -58.425919],
+//     [-34.584909, -58.416602] 
+//   ]);
+
+//   var sierras_y_estribaciones = L.polygon([
+//     [-34.584909, -58.416602],
+//     [-34.572855, -58.405505],
+//     [-34.581343, -58.404076],
+//     [-34.584032, -58.392338],
+//     [-34.596048, -58.381723],
+//     [-34.608987, -58.385397],
+//     [-34.613019, -58.408057],
+//     [-34.612179, -58.425919],
+//     [-34.584909, -58.416602] 
+//   ]);
+
+//   var llanura_chaqueña = L.polygon([
+//     [-34.584909, -58.416602],
+//     [-34.572855, -58.405505],
+//     [-34.581343, -58.404076],
+//     [-34.584032, -58.392338],
+//     [-34.596048, -58.381723],
+//     [-34.608987, -58.385397],
+//     [-34.613019, -58.408057],
+//     [-34.612179, -58.425919],
+//     [-34.584909, -58.416602] 
+//   ]);
+
+//   region_map.addLayer(cordillera_oriental);
+//   region_map.addLayer(sierras_y_estribaciones);
+//   region_map.addLayer(llanura_chaqueña);
+// }
+
+
+// var svg_basin = d3.select(base_map.getPanes().overlayPane).append("svg"),
+//     g_basin = svg_basin.append("g").attr("class", "leaflet-zoom-hide");
+
+// var transform_basin = d3.geo.transform({point: projectPoint_basin}),
+//       path_basin = d3.geo.path().projection(transform_basin);
+
+  // var feature_basin = g_basin.selectAll("path")
+  //     .data(collection.features)
+  //   .enter().append("path")
+  //   .attr("d", path_basin)
+	// .style("fill", "brown");	
+
+  // base_map.on("viewreset", reset_basin);
+  // reset_basin();
+
+// Reposition the SVG to cover the features.
+//   function reset_basin() {
+//     var bounds_basin = path_basin.bounds(collection),
+//         topLeft_basin = bounds_basin[0],
+//         bottomRight_basin = bounds_basin[1];
+
+//     svg_basin.attr("width", bottomRight_basin[0] - topLeft_basin[0])
+//         .attr("height", bottomRight_basin[1] - topLeft_basin[1])
+//         .style("left", topLeft_basin[0] + "px")
+//         .style("top", topLeft_basin[1] + "px");
+
+//     g_basin.attr("transform", "translate(" + -topLeft_basin[0] + "," + -topLeft_basin[1] + ")");
+
+//     feature_basin.attr("d", path_basin);
+// }
+  // Use Leaflet to implement a D3 geometric transformation.
+  // function projectPoint_basin(x, y) {
+  //   var point = base_map.latLngToLayerPoint(new L.LatLng(y, x));
+  //   this.stream.point(point.x, point.y);
+  // }
+
+  // function initial_polyline(){
+  //   var pointA = new L.LatLng(-34.584520, -58.416830);
+  //   var pointB = new L.LatLng(-34.611949, -58.380781);
+  //   var pointList = [pointA, pointB];
+
+  //   var firstpolyline = new L.polyline(pointList, {
+  //   color: 'red',
+  //   weight: 3,
+  //   opacity: 0.5,
+  //   smoothFactor: 1
+  //   });
+  //   // firstpolyline.addTo(base_map);
+  //   base_map.addLayer(firstpolyline);
+  // }
+</script>
+
 </body>
 </html>
