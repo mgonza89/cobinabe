@@ -1,0 +1,27 @@
+﻿
+.hideIFrame {
+    height: 800px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.mapas {
+    display: block;
+    margin: auto;
+    width: 40%;
+}
+
+.botones {
+    text-align: center;
+    display: block;
+    margin: auto;
+    width: 40%;
+}
+
+.iframeMapa {
+    position: relative;
+    top: -46px;
+    border: none;
+    width ="640";
+    height ="480";
+}
