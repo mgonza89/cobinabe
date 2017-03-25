@@ -14,7 +14,8 @@ Licence URI: http://www.os-templates.com/template-terms
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link href="maps.css" rel="stylesheet" />
+    <link href="../layout/styles/maps.css" rel="stylesheet" />
+    <link href="../layout/styles/customLayout.css" rel="stylesheet" />
 </head>
 <body id="top">
     <iframe src='../shared/header.html' class="wrapper row1" scrolling="no"></iframe>
@@ -25,7 +26,7 @@ Licence URI: http://www.os-templates.com/template-terms
         <nav id="mainav" class="hoc clear">
             <!-- ################################################################################################ -->
             <ul class="clear">
-                <li class="active"><a href="../index.html">Inicio</a></li>
+                <li><a href="../index.html">Inicio</a></li>
                 <li>
                     <a class="drop" href="#">Autoridades</a>
                     <ul>
@@ -52,15 +53,30 @@ Licence URI: http://www.os-templates.com/template-terms
         </nav>
     </div>
     <!-- ################################################################################################ -->
-    <div class="botones" style="position: "center">
+
+    <div class="wrapper row2 submenu">
+  <nav id="mainav" class="hoc clear"> 
+    <!-- ################################################################################################ -->
+    <ul class="clear">
+      <li><a href="#" id='hideshowCuenca' value='hide/show'>Cuenca</a></li>
+      <li><a href="#" id='hideshowRegion' value='hide/show'>Regiones</a></li>
+      <li><a href="#" id='hideshowSubregion' value='hide/show'>Subregiones</a></li>
+      <li><a href="#">Proyectos</a></li>
+      <li><a href="#">Indicadores Sociales</a></li>
+    </ul>
+    <!-- ################################################################################################ -->
+  </nav>
+</div>
+
+    <!--<div class="botones" style="position: center">
         
 
             <button type="button" class="btn btn-primary" id='hideshowCuenca' value='hide/show'>Cuenca</button>
             <button type="button" class="btn btn-primary" id='hideshowRegion' value='hide/show'>Regiones</button>
             <button type="button" class="btn btn-primary" id='hideshowSubregion' value='hide/show'>Sub Regiones</button>
      
-    </div>
-    <div class="mapas">
+    </div>-->
+    <div class="mapas centeredObject">
         <main class="hoc container clear">
             <div id="mapacuenca" class="hideIFrame">
                 <iframe id="iFrameMapaCuenca" class="iframeMapa" src="https://www.google.com/maps/d/embed?mid=1n69fjxXUu6sKdJgmLrniWwzQ8as" width ="640" height ="480"></iframe>
