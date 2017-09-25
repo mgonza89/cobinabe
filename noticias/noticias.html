@@ -8,11 +8,11 @@ Licence: Free to use under our free template licence terms
 Licence URI: http://www.os-templates.com/template-terms
 -->
 <html>
-  <head>
-<title>COBINABE</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<head>
+    <title>COBINABE</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body id="top">
     <iframe src='../shared/header.html' class="wrapper row1" scrolling="no"></iframe>
@@ -50,60 +50,17 @@ Licence URI: http://www.os-templates.com/template-terms
         </nav>
     </div>
 
-    <div class="wrapper row3">
-        <main class="hoc container clear">
+    <div id="newsBody" class="wrapper newsBody">
+        <main class="container clear noPadding">
 
             <div class="content">
                 <div class="scrollable">
-                    <style style="text/css">
-                        .hoverTable {
-                            width: 100%;
-                            border-collapse: collapse;
-                        }
-
-                            .hoverTable td {
-                                padding: 7px;
-                                border: #4e95f4 1px solid;
-                            }
-                            /* Define the default color for all the table rows */
-                            .hoverTable tr {
-                                background: #b8d1f3;
-                            }
-                                /* Define the hover highlight color for the table row */
-                                .hoverTable tr:hover {
-                                    background-color: #ffff99;
-                                }
-                    </style>
-                    <table>
-                        <h3 style="text-align:center ; color= 01788E">Noticias sobre COBINABE</h3>
-
-
-
-
-                        <tbody>
-                            <tr><td><font size="2"><b><li> 26/05/2017 </li></b></font></td><td></td></tr>
-                            <tr><td>Informaron sobre la obra de modernización de estaciones meteorológicas del Bermejo</td><td><a href="http://www.salta.gov.ar/prensa/noticias/informaron-sobre-la-obra-de-modernizacion-de-estaciones-meteorologicas-del-bermejo/52029" target="_blank">Ver</a></td></tr>
-                            <tr><td><font size="2"><b><li> 09/04/2017 </li></b></font></td><td></td></tr>
-                            <tr><td>Bolivia y Argentina reactivan Comisión Binacional desde 2012</td><td><a href="http://www.eldiario.net/noticias/2017/2017_03/nt170309/nacional.php?n=41&-bolivia-y-argentina-reactivan-comision-binacional-desde-2012" target="_blank">Ver</a></td></tr>
-
-
-
-
-                        </tbody>
-
-
-
-                    </table>
+                    <iframe src="http://cobinabe.com.ar/blog/noticias/" id="newsFrame" class="newsFrame wrapper row5"></iframe>
+                    
                 </div>
 
         </main>
     </div>
-
-    <!-- ################################################################################################ -->
-    <!-- ################################################################################################ -->
-    <!-- ################################################################################################ -->
-    <iframe src='../shared/footer.html' class="wrapper row5" scrolling="no"></iframe>
-
     <!-- ################################################################################################ -->
     <!-- ################################################################################################ -->
     <!-- ################################################################################################ -->
@@ -113,5 +70,16 @@ Licence URI: http://www.os-templates.com/template-terms
     <script src="../layout/scripts/jquery.backtotop.js"></script>
     <script src="../layout/scripts/jquery.mobilemenu.js"></script>
     <script src="../layout/scripts/jquery.flexslider-min.js"></script>
+    <script>
+        $(document).ready(function(){
+            newsFrameDetails();
+        });
+        
+        function newsFrameDetails(){
+            document.getElementById("newsFrame").scrolling = "auto";
+            document.getElementById("newsFrame").frameBorder = "no";
+        }
+        
+    </script>
 </body>
 </html>
